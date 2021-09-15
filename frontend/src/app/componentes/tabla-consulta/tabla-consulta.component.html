@@ -1,0 +1,73 @@
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Telefono1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let persona of cliente; index as i">
+          <th scope="row">{{ persona.id }}</th>
+          <td>{{ persona.cedula }}</td>
+          <td>{{ persona.nombre}}</td>
+          <td>{{ persona.telefonO1 }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+  
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Placa</th>
+          <th scope="col">Marca</th>
+          <th scope="col">modelo</th>
+          <th scope="col">costo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let car of carro; index as i">
+          <th scope="row">{{ car.id }}</th>
+          <td>{{ car.placa }}</td>
+          <td>{{ car.marca}}</td>
+          <td>{{ car.modelo }}</td>
+          <td>{{ car.costo}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">fecha</th>
+          <th scope="col">abono inicial</th>
+          <th scope="col">id de carro</th>
+          <th scope="col">id de cliente</th>
+          <th scope="col">devuelto</th>
+          <th scope="col">saldo</th>
+          <th scope="col">tiempo</th>
+          <th scope="col">valortotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let al of alquiler; index as i">
+          <th scope="row">{{ al.id }}</th>
+          <td>{{ al.fecha}}</td>
+          <td>{{ al.abonoinicial}}</td>
+          <td>{{ al.carroId }}</td>
+          <td>{{ al.clienteId}}</td>
+          <td>{{ al.devuelto}}</td>
+          <td>{{ al.saldo}}</td>
+          <td>{{ al.tiempo}}</td>
+          <td>{{ al.valortotal}}</td>
+        </tr>
+        </tbody>
+      </table>
+ 
+

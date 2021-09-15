@@ -1,0 +1,134 @@
+<button mat-raised-button color="primary"data-bs-toggle="modal" data-bs-target="#modelId">Registrar persona</button>&nbsp;&nbsp;&nbsp;
+<mat-form-field appearance="standard">
+  <mat-label>Filtro</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="ejemplo Juan" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="fullname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+      <td mat-cell *matCellDef="let row"> {{row.fullname}} </td>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="birth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de nacimiento </th>
+      <td mat-cell *matCellDef="let row"> {{row.birth | date: 'dd-MM-YYYY' :'+0000' }}</td>
+    </ng-container>
+
+
+    <!-- Fruit Column -->
+    <ng-container matColumnDef="datereg">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de registro </th>
+      <td mat-cell *matCellDef="let row"> {{row.createdAt | date: 'dd-MM-YYYY hh:m:s aaa' :'-05:00'}} </td>
+    </ng-container>
+
+    <!-- Fruit Column -->
+    <ng-container matColumnDef="option">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Opciones</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-mini-fab color="primary" (click)="editPerson(row)" data-bs-toggle="modal" data-bs-target="#modaleditar">
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </button>&nbsp;
+        <button mat-mini-fab color="warn" (click)="trashPerson(row.id)">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No se encontro coincidencia "{{input.value}}"</td>
+    </tr>
+  </table>
+  
+  <mat-paginator [pageSizeOptions]="[10, 5, 25, 100]" aria-label="Sel"></mat-paginator>
+</div>
+
+
+<!-- Modal Crear persona-->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Registro de persona</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form id="contactForm" [formGroup]="formPerson" (ngSubmit)="sendData()">
+          <div class="row">
+
+            <mat-form-field class="col">
+
+              <input matInput placeholder="Nombre Completo" class="form-control" name="fullname" formControlName="fullname">
+              
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Seleccione fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="birth">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+
+          </div>
+          <br>
+          <button id="btnSubmit" mat-raised-button type="submit" color="primary"
+            [disabled]="formPerson.invalid">Registrar</button>
+
+        </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar persona-->
+<div class="modal fade" id="modaleditar" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar persona</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="formEdit" (ngSubmit)="updateData()">
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="First name" formControlName="fullname">
+            </div>
+            <div class="col-md-5">
+              <input type="date" class="form-control" placeholder="Last name" formControlName="birth">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <fa-icon [icon]="iconsave"></fa-icon> Registrar
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <fa-icon [icon]="iconsave"></fa-icon> Cerrar
+          </button>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
